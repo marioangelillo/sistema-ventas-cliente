@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import './App.css';
 import { Container } from 'react-bootstrap';
+import {BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'; 
 import EmisorTickets from './components/EmisorTickets';
-import Header from './layout/Header';
-import Menu from './layout/Menu';
+import Menu from './components/Menu';
+import AddProduct from './components/AddProduct';
+import Header from './layout/Header'
 
 
 function App() {
@@ -25,10 +27,37 @@ function App() {
 
   return (
     <>
-      <Container className="border border-white" fluid>
-        <Header date={date} />
-        <Menu />
-      </Container>
+
+      <Header date={date} />
+      <BrowserRouter>
+        <Switch>
+
+        <Route
+            path="/"
+            exact
+            component = { () => 
+              <Menu />
+            }
+          />
+
+          <Route
+            path="/emisionticket"
+            exact
+            component = { () => 
+              <EmisorTickets />
+            }
+          />
+
+          <Route
+            path="/addproduct"
+            exact
+            component = { () => 
+              <AddProduct />
+            }
+          />
+
+        </Switch>
+      </BrowserRouter>
       
     </>
   );

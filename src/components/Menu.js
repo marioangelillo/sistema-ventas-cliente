@@ -12,7 +12,7 @@ export default function Menu() {
                         </Dropdown.Toggle>                    
 
                         <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">EMISIÓN DE TICKET</Dropdown.Item> 
+                            <Dropdown.Item href="/emisionticket">EMISIÓN DE TICKET</Dropdown.Item> 
                             <Dropdown.Divider />
                             <Dropdown.Item href="#/action-1">SUBTOTAL</Dropdown.Item>                         
                         </Dropdown.Menu>
@@ -26,7 +26,7 @@ export default function Menu() {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">AGREGAR PRODUCTO</Dropdown.Item>
+                            <Dropdown.Item href="/addproduct">AGREGAR PRODUCTO</Dropdown.Item>
                             <Dropdown.Divider />
                             <Dropdown.Item href="#/action-2">MODIFICAR PRODUCTO</Dropdown.Item>
                             <Dropdown.Divider />

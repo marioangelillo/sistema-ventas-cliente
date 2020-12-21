@@ -1,18 +1,18 @@
 import React from 'react';
-import { Form, Row, Col, Table, InputGroup, FormControl } from 'react-bootstrap'
+import { Form, Button, Col, Table } from 'react-bootstrap';
 
 export default function EmisorTickets() {
     return (
         <>
-            <Form className="mt-2">
-                <Row>
-                <InputGroup className="my-2 mx-4">
-                    <InputGroup.Prepend>
-                    <InputGroup.Text>Buscar</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl id="inlineFormInputGroup" placeholder="Nombre producto" />
-                </InputGroup>
-                </Row>
+            <Form className="my-3 mx-1">
+                <Form.Row>
+                    <Col xs={9} sm={10}>
+                    <Form.Control placeholder="Nombre del producto" />
+                    </Col>
+                    <Col xs={3} sm={2}>
+                    <Button variant="secondary w-100">Buscar</Button>
+                    </Col>                    
+                </Form.Row>
             </Form>
 
             <div className="table-responsive">
