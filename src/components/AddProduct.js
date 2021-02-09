@@ -87,7 +87,7 @@ export default function AddProduct() {
                         />
                     </Col>
                     <Col xs={12} lg={2}>
-                    <Button variant="secondary w-100 my-1" type="submit">AGREGAR</Button>
+                    <Button variant="primary w-100 my-1" type="submit">AGREGAR</Button>
                     </Col>                     
                 </Form.Row>
             </Form>

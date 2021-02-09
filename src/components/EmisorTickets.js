@@ -13,7 +13,20 @@ export default function EmisorTickets() {
     });    
 
     const [findProducts, setFindProducts] = useState([]);
-    const [shopList, setShopList] = useState([])
+    const [shopList, setShopList] = useState([]);
+
+    /*const [subtotal, setSubtotal] = useState();
+    const [total, setTotal] = useState()
+
+    useEffect(() => {
+        let suma = 0;
+        for (let i = 0; i < listaCarrito.length; i++) {
+            suma = suma + listaCarrito[i].subtotal;            
+        }
+        setSubtotal(suma);
+        setTotal(suma);
+        // decscuento setTotal(suma * 0.75);
+    }, [listaCarrito])*/
 
     const handleChange = e => {
         setProduct({
@@ -48,6 +61,19 @@ export default function EmisorTickets() {
         handleShow();
     }
 
+    const handleChangeCantidad = (producto) =>{        
+        setShopList([
+            ...shopList.map(prod => prod.id === producto.id ? 
+             {...prod,                
+                 cantidad : document.getElementById(producto.id).value,
+                 subtotal : document.getElementById(producto.id).value * producto.precio
+             } 
+             : prod
+             )
+        ])
+        console.log(producto);
+    }
+
     return (
         <>
             <Form className="my-3 mx-1" onSubmit={handleSubmit}>
@@ -62,7 +88,7 @@ export default function EmisorTickets() {
                     />
                     </Col>
                     <Col xs={3} sm={2}>
-                    <Button variant="secondary w-100" type="submit">Buscar</Button>
+                    <Button variant="primary w-100" type="submit">Buscar</Button>
                     </Col>                    
                 </Form.Row>
             </Form>
@@ -85,9 +111,14 @@ export default function EmisorTickets() {
                             <tr>
                             <td>{producto.id}</td>
                             <td>{producto.nombre}</td>
-                            <td>{producto.precio}</td>
-                            <td>{producto.precio}</td>
-                            <td>{producto.stock}</td>
+                            <td><input
+                             id={producto.id}
+                             type="number"
+                             min={1}
+                             defaultValue={1}
+                             onChange={() => handleChangeCantidad(producto)}/></td>
+                            <td>${producto.precio}</td>
+                            <td>${producto.subtotal}</td>
                             </tr>
                         ))
                     }

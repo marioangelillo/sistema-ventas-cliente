@@ -4,9 +4,15 @@ import {Modal, Button, Table} from 'react-bootstrap';
 
 export default function ModalFindProducts({show, handleClose, handleShow, findProducts, shopList,setShopList}) {
 
-    const AddShop = (prod) =>{
+    const AddShop = (producto) =>{
+        if(shopList.find(prod => prod.id === producto.id)){
+            alert('El producto ya se encuentra en el carrito');
+            return;
+        }
+        producto.cantidad = 1;
+        producto.subtotal = producto.cantidad * producto.precio
         setShopList([
-            ...shopList, prod
+            ...shopList, producto
         ]);
         handleClose();
     }

@@ -7,7 +7,7 @@ export default function Menu() {
             <Row className="p-1">
                 <Col sm={12} lg={2}>
                     <Dropdown className="m-1">
-                        <Dropdown.Toggle variant="secondary w-100" id="dropdown-basic">
+                        <Dropdown.Toggle variant="primary w-100" id="dropdown-basic">
                             VENTAS
                         </Dropdown.Toggle>                    
 
@@ -21,7 +21,7 @@ export default function Menu() {
                 
                 <Col sm={12} lg={2}>
                     <Dropdown className="m-1">
-                        <Dropdown.Toggle variant="secondary w-100" id="dropdown-basic">
+                        <Dropdown.Toggle variant="primary w-100" id="dropdown-basic">
                             PRODUCTOS
                         </Dropdown.Toggle>
 
@@ -38,7 +38,7 @@ export default function Menu() {
 
                 <Col sm={12} lg={2}>
                     <Dropdown className="m-1">
-                        <Dropdown.Toggle variant="secondary w-100" id="dropdown-basic">
+                        <Dropdown.Toggle variant="primary w-100" id="dropdown-basic">
                             VARIOS
                         </Dropdown.Toggle>
 
