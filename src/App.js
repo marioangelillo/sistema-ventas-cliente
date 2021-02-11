@@ -8,6 +8,13 @@ import AddProduct from './components/AddProduct';
 import Header from './layout/Header'
 import DeleteProduct from './components/DeleteProduct';
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {	
+  faHome  
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faHome)
+
 
 function App() {
 

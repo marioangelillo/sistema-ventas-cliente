@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Form, Button, Col, Table } from 'react-bootstrap';
 import ModalFindProducts from './ModalFindProducts';
 
@@ -15,18 +15,18 @@ export default function EmisorTickets() {
     const [findProducts, setFindProducts] = useState([]);
     const [shopList, setShopList] = useState([]);
 
-    /*const [subtotal, setSubtotal] = useState();
+    const [subtotal, setSubtotal] = useState();
     const [total, setTotal] = useState()
 
     useEffect(() => {
         let suma = 0;
-        for (let i = 0; i < listaCarrito.length; i++) {
-            suma = suma + listaCarrito[i].subtotal;            
+        for (let i = 0; i < shopList.length; i++) {
+            suma = suma + shopList[i].subtotal;            
         }
         setSubtotal(suma);
         setTotal(suma);
         // decscuento setTotal(suma * 0.75);
-    }, [listaCarrito])*/
+    }, [shopList])
 
     const handleChange = e => {
         setProduct({
@@ -137,6 +137,24 @@ export default function EmisorTickets() {
                 findProducts={findProducts}
                 shopList={shopList} setShopList={setShopList}
             />
+
+            <div class="fixed-bottom">
+                <div class="card col-12 col-md-3 offset-md-9">
+                    <ul class="list-group list-group-flush">                        
+                        <li class="list-group-item d-flex justify-content-between">
+                            <div>Subtotal: </div>
+                            <div>${subtotal}</div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <div>Total: </div>
+                            <div>${total}</div>
+                        </li>
+                        <li class="list-group-item">
+                            <Button variant="success w-100">FINALIZAR VENTA</Button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </>
     )
 }
