@@ -6,6 +6,7 @@ import EmisorTickets from './components/EmisorTickets';
 import Menu from './components/Menu';
 import AddProduct from './components/AddProduct';
 import Header from './layout/Header'
+import DeleteProduct from './components/DeleteProduct';
 
 
 function App() {
@@ -53,6 +54,14 @@ function App() {
             exact
             component = { () => 
               <AddProduct />
+            }
+          />
+
+          <Route
+            path="/deleteproduct"
+            exact
+            component = { () => 
+              <DeleteProduct />
             }
           />
 

@@ -37,7 +37,7 @@ export default function EmisorTickets() {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        if(product === ''){
+        if(product.name === ''){
             alert('Debe ingresar nombre del producto');
             return;
         }
@@ -55,6 +55,9 @@ export default function EmisorTickets() {
 
         if(solicitud.ok){
             setFindProducts(respuesta);  
+            setProduct({
+                name: ''
+            })
         }else {
             alert('Hubo un error');
         }
@@ -81,7 +84,7 @@ export default function EmisorTickets() {
                     <Col xs={9} sm={10}>
                     <Form.Control
                     name="name"
-                    value={product.nombre}
+                    value={product.name}
                     onChange={handleChange}
                     placeholder="Nombre del producto"
                     required

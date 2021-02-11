@@ -28,9 +28,9 @@ export default function Menu() {
                         <Dropdown.Menu>
                             <Dropdown.Item href="/addproduct">AGREGAR PRODUCTO</Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item href="#/action-2">MODIFICAR PRODUCTO</Dropdown.Item>
+                            <Dropdown.Item href="/deleteproduct">MODIFICAR PRODUCTO</Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item href="#/action-3">ELIMINAR PRODUCTO</Dropdown.Item>
+                            <Dropdown.Item href="/deleteproduct">ELIMINAR PRODUCTO</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Col>
