@@ -1,7 +1,19 @@
 import React, {useState} from 'react';
 import { Form, Button, Col, Table } from 'react-bootstrap';
+import ModalUpdateProducts from './ModalUpdateProducts';
 
-export default function DeleteProduct() {
+export default function ManageProduct() {
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [productToUpdate, setProductToUpdate] = useState({
+        id: '',
+        nombre: '',
+        stock: '',
+        precio: ''
+    })
 
     const [product, setProduct] = useState({
         name: ''
@@ -18,7 +30,7 @@ export default function DeleteProduct() {
 
     const handleSubmit = async e =>{
         e.preventDefault();
-        if(product.nombre === ''){
+        if(product.name === ''){
             alert('Debe completar el campo nombre');
         }
 
@@ -68,8 +80,13 @@ export default function DeleteProduct() {
         }
         
     }
+
+    const updateProduct = (producto) =>{
+        setProductToUpdate(producto);
+        handleShow();
+    }
     return (
-        <div>
+        <>
             <Form className="my-3 mx-1" onSubmit={handleSubmit}>
                 <Form.Row>
                     <Col xs={9} sm={10}>
@@ -107,7 +124,10 @@ export default function DeleteProduct() {
                             <td>{producto.nombre}</td>   
                             <td>{producto.stock}</td>                         
                             <td>${producto.precio}</td>
-                            <td><Button variant="danger btn-sm" onClick={() => deleteProduct(producto)}>ELIMINAR</Button></td>
+                            <td>
+                                <Button variant="danger btn-sm mr-1" onClick={() => deleteProduct(producto)}>ELIMINAR</Button>
+                                <Button variant="warning btn-sm" onClick={() => updateProduct(producto)}>MODIFICIAR</Button>
+                            </td>
                             </tr>
                         ))
                     }
@@ -115,7 +135,15 @@ export default function DeleteProduct() {
                     </tbody>
                 </Table>
             </div>
+
+            <ModalUpdateProducts
+            show={show}
+            handleShow={handleShow}
+            handleClose={handleClose}
+            productsList={productsList} setProductsList={setProductsList}
+            productToUpdate={productToUpdate} setProductToUpdate={setProductToUpdate}
+            />
             
-        </div>
+        </>
     )
 }

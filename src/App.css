@@ -6,3 +6,8 @@ hr{
   border: 1px solid white;
 }
 
+.scrollable{
+  height: 340px;
+  overflow: scroll;
+  overflow-x: hidden;
+}

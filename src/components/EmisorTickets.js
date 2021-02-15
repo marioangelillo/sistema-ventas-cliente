@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Form, Button, Col, Table } from 'react-bootstrap';
 import ModalFindProducts from './ModalFindProducts';
+import TableScrollbar from 'react-table-scrollbar';
 
 export default function EmisorTickets() {
 
@@ -64,7 +65,10 @@ export default function EmisorTickets() {
         handleShow();
     }
 
-    const handleChangeCantidad = (producto) =>{        
+    const handleChangeCantidad = (producto) =>{ 
+        /*if(0 >= document.getElementById(producto.id).value){
+            alert('La cantidad mínima es 1')
+        }*/      
         setShopList([
             ...shopList.map(prod => prod.id === producto.id ? 
              {...prod,                
@@ -95,41 +99,59 @@ export default function EmisorTickets() {
                     </Col>                    
                 </Form.Row>
             </Form>
-
-            <div className="table-responsive">
-                <Table striped bordered hover>
-                    
-                    <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio</th>
-                        <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        shopList.map(producto =>(
-                            <tr>
-                            <td>{producto.id}</td>
-                            <td>{producto.nombre}</td>
-                            <td><input
-                             id={producto.id}
-                             type="number"
-                             min={1}
-                             defaultValue={1}
-                             onChange={() => handleChangeCantidad(producto)}/></td>
-                            <td>${producto.precio}</td>
-                            <td>${producto.subtotal}</td>
-                            </tr>
-                        ))
-                    }
+                <div className="scrollable text-center">
+                    <Table striped bordered responsive size="sm">
                         
-                    </tbody>
-                </Table>
+                        <thead>
+                            <tr>
+                            <th>#</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            shopList.map(producto =>(
+                                <tr>
+                                <td>{producto.id}</td>
+                                <td>{producto.nombre}</td>
+                                <td><input
+                                id={producto.id}
+                                className="text-center"
+                                type="number"
+                                min={1}
+                                defaultValue={1}
+                                onChange={() => handleChangeCantidad(producto)}/></td>
+                                <td>${producto.precio}</td>
+                                <td>${producto.subtotal}</td>
+                                </tr>
+                            ))
+                        }
+                                
+                        </tbody>
+                    </Table>           
+                </div>            
+
+            <div className="fixed-bottom">
+                <div className="card col-12 col-md-3 offset-md-9">
+                    <ul className="list-group list-group-flush">                        
+                        <li className="list-group-item d-flex justify-content-between">
+                            <div>Subtotal: </div>
+                            <div>${subtotal}</div>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between">
+                            <div>Total: </div>
+                            <div>${total}</div>
+                        </li>
+                        <li className="list-group-item">
+                            <Button variant="success w-100">FINALIZAR VENTA</Button>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            
+
             <ModalFindProducts 
                 show={show}
                 handleShow={handleShow}
@@ -137,24 +159,6 @@ export default function EmisorTickets() {
                 findProducts={findProducts}
                 shopList={shopList} setShopList={setShopList}
             />
-
-            <div class="fixed-bottom">
-                <div class="card col-12 col-md-3 offset-md-9">
-                    <ul class="list-group list-group-flush">                        
-                        <li class="list-group-item d-flex justify-content-between">
-                            <div>Subtotal: </div>
-                            <div>${subtotal}</div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <div>Total: </div>
-                            <div>${total}</div>
-                        </li>
-                        <li class="list-group-item">
-                            <Button variant="success w-100">FINALIZAR VENTA</Button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </>
     )
 }

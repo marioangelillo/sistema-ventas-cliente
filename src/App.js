@@ -6,7 +6,7 @@ import EmisorTickets from './components/EmisorTickets';
 import Menu from './components/Menu';
 import AddProduct from './components/AddProduct';
 import Header from './layout/Header'
-import DeleteProduct from './components/DeleteProduct';
+import ManageProduct from './components/ManageProduct';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {	
@@ -65,12 +65,13 @@ function App() {
           />
 
           <Route
-            path="/deleteproduct"
+            path="/manageproduct"
             exact
             component = { () => 
-              <DeleteProduct />
+              <ManageProduct />
             }
           />
+          
 
         </Switch>
       </BrowserRouter>
