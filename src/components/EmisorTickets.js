@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Form, Button, Col, Table } from 'react-bootstrap';
 import ModalFindProducts from './ModalFindProducts';
-import TableScrollbar from 'react-table-scrollbar';
 
 export default function EmisorTickets() {
 
@@ -65,10 +64,11 @@ export default function EmisorTickets() {
         handleShow();
     }
 
-    const handleChangeCantidad = (producto) =>{ 
-        /*if(0 >= document.getElementById(producto.id).value){
-            alert('La cantidad mínima es 1')
-        }*/      
+    const restarCantidad = (producto) =>{
+        if(1 >= document.getElementById(producto.id).value){
+            return;
+        }
+        document.getElementById(producto.id).value--
         setShopList([
             ...shopList.map(prod => prod.id === producto.id ? 
              {...prod,                
@@ -78,7 +78,23 @@ export default function EmisorTickets() {
              : prod
              )
         ])
-        console.log(producto);
+    }
+    const sumarCantidad = (producto) =>{
+
+        document.getElementById(producto.id).value++
+        setShopList([
+            ...shopList.map(prod => prod.id === producto.id ? 
+             {...prod,                
+                 cantidad : document.getElementById(producto.id).value,
+                 subtotal : document.getElementById(producto.id).value * producto.precio
+             } 
+             : prod
+             )
+        ])
+    }
+
+    const eliminarProducto = (producto) =>{
+        setShopList(shopList.filter(prod => prod.id !== producto.id))
     }
 
     return (
@@ -115,15 +131,21 @@ export default function EmisorTickets() {
                         {
                             shopList.map(producto =>(
                                 <tr>
-                                <td>{producto.id}</td>
+                                <td><Button variant="danger btn-sm" onClick={() => eliminarProducto(producto)}>X</Button></td>
                                 <td>{producto.nombre}</td>
-                                <td><input
-                                id={producto.id}
-                                className="text-center"
-                                type="number"
-                                min={1}
-                                defaultValue={1}
-                                onChange={() => handleChangeCantidad(producto)}/></td>
+                                <td className="d-flex justify-content-center">
+                                    <Button variant="primary btn-sm mr-1" onClick={() => restarCantidad(producto)}> - </Button>
+                                    <input
+                                    id={producto.id}
+                                    className="text-center w-25"
+                                    type="number"
+                                    min={1}
+                                    defaultValue={1}
+                                    readOnly
+                                    onKeyDown={e => {e.preventDefault()}}
+                                    />
+                                    <Button variant="primary btn-sm ml-1" onClick={() => sumarCantidad(producto)}> + </Button>
+                                </td>
                                 <td>${producto.precio}</td>
                                 <td>${producto.subtotal}</td>
                                 </tr>
