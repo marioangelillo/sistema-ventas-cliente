@@ -42,11 +42,13 @@ export default function ManageProduct() {
         }
         });
         
-        console.log(solicitud);
         const respuesta = await solicitud.json();
-        console.log(respuesta);
 
         if(solicitud.ok){
+            if(respuesta.length === 0){
+                alert('No se encontraron productos con ese nombre');
+                return;
+            }
             setProductsList(respuesta);  
             setProduct({
                 name: ''
@@ -125,7 +127,7 @@ export default function ManageProduct() {
                             <td>{producto.stock}</td>                         
                             <td>${producto.precio}</td>
                             <td>
-                                <Button variant="danger btn-sm mr-1" onClick={() => deleteProduct(producto)}>ELIMINAR</Button>
+                                <Button variant="danger btn-sm mr-1 mb-1 mb-md-0" onClick={() => deleteProduct(producto)}>ELIMINAR</Button>
                                 <Button variant="warning btn-sm" onClick={() => updateProduct(producto)}>MODIFICIAR</Button>
                             </td>
                             </tr>

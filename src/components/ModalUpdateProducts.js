@@ -82,12 +82,11 @@ export default function ModalUpdateProducts({show, handleClose, handleShow, prod
                                  onChange={handleChange}
                                  required
                                 />
-                                </Form.Group>
-
-                                <Button variant="primary" type="submit">
-                                    Actualizar
-                                </Button>
+                                </Form.Group>                                
                             </Form.Row>
+                            <Button variant="primary" type="submit">
+                                    Actualizar
+                            </Button>
                         </Form>
                                 
                     </Modal.Body>

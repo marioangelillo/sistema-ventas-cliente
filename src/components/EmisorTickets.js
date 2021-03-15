@@ -2,7 +2,20 @@ import React, {useState, useEffect} from 'react';
 import { Form, Button, Col, Table } from 'react-bootstrap';
 import ModalFindProducts from './ModalFindProducts';
 
-export default function EmisorTickets() {
+export default function EmisorTickets({date}) {
+
+    useEffect(() => {
+        createTable();
+    }, [])
+
+    const createTable = async () =>{
+        const solicitud = await fetch('http://localhost:4000/api/createtable',{
+            method: 'GET',
+            headers : {
+            'Content-Type': 'application/json'
+            }
+        });
+    }
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -16,7 +29,9 @@ export default function EmisorTickets() {
     const [shopList, setShopList] = useState([]);
 
     const [subtotal, setSubtotal] = useState();
-    const [total, setTotal] = useState()
+    const [total, setTotal] = useState();
+
+    const [payment, setPayment] = useState()
 
     useEffect(() => {
         let suma = 0;
@@ -64,7 +79,7 @@ export default function EmisorTickets() {
         handleShow();
     }
 
-    const restarCantidad = (producto) =>{
+    const lessAmount = (producto) =>{
         if(1 >= document.getElementById(producto.id).value){
             return;
         }
@@ -79,7 +94,7 @@ export default function EmisorTickets() {
              )
         ])
     }
-    const sumarCantidad = (producto) =>{
+    const moreAmount = (producto) =>{
 
         document.getElementById(producto.id).value++
         setShopList([
@@ -93,9 +108,41 @@ export default function EmisorTickets() {
         ])
     }
 
-    const eliminarProducto = (producto) =>{
-        setShopList(shopList.filter(prod => prod.id !== producto.id))
+    const deleteProduct = (producto) =>{
+        if(window.confirm('¿Esta seguro que desea descartar producto?')){
+            setShopList(shopList.filter(prod => prod.id !== producto.id))
+        }        
     }
+
+    const changePayment = e =>{
+        setPayment(e.target.value);
+    }
+
+    const finSale = async () => {
+        
+        if(total <= 0){
+            alert('El monto total debe ser mayor que cero');
+            return;
+        }
+        
+        const solicitud = await fetch('http://localhost:4000/api/newsale',{
+            method: 'POST',     
+            body : JSON.stringify({total, date, payment}),
+            headers : {
+            'Content-Type': 'application/json'
+            }
+        });
+        const respuesta = await solicitud.json();
+        if(solicitud.ok){
+            setShopList([]);
+            setPayment('Efectivo')
+            alert('Venta finalizada correctamente');
+            console.log(respuesta)
+        }else{
+            alert(respuesta.msg);
+        }
+
+    }    
 
     return (
         <>
@@ -120,7 +167,7 @@ export default function EmisorTickets() {
                         
                         <thead>
                             <tr>
-                            <th>#</th>
+                            <th></th>
                             <th>Producto</th>
                             <th>Cantidad</th>
                             <th>Precio</th>
@@ -129,14 +176,14 @@ export default function EmisorTickets() {
                         </thead>
                         <tbody>
                         {
-                            shopList.map(producto =>(
-                                <tr>
-                                <td><Button variant="danger btn-sm" onClick={() => eliminarProducto(producto)}>X</Button></td>
-                                <td>{producto.nombre}</td>
+                            shopList.map(product =>(
+                                <tr key={product.id}>
+                                <td><Button variant="danger btn-sm" onClick={() => deleteProduct(product)}>X</Button></td>
+                                <td>{product.nombre}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Button variant="primary btn-sm mr-1" onClick={() => restarCantidad(producto)}> - </Button>
+                                    <Button variant="primary btn-sm mr-1" onClick={() => lessAmount(product)}> - </Button>
                                     <input
-                                    id={producto.id}
+                                    id={product.id}
                                     className="text-center w-25"
                                     type="number"
                                     min={1}
@@ -144,10 +191,10 @@ export default function EmisorTickets() {
                                     readOnly
                                     onKeyDown={e => {e.preventDefault()}}
                                     />
-                                    <Button variant="primary btn-sm ml-1" onClick={() => sumarCantidad(producto)}> + </Button>
+                                    <Button variant="primary btn-sm ml-1" onClick={() => moreAmount(product)}> + </Button>
                                 </td>
-                                <td>${producto.precio}</td>
-                                <td>${producto.subtotal}</td>
+                                <td>${product.precio}</td>
+                                <td>${product.subtotal}</td>
                                 </tr>
                             ))
                         }
@@ -156,8 +203,14 @@ export default function EmisorTickets() {
                     </Table>           
                 </div>            
 
-            <div className="fixed-bottom">
-                <div className="card col-12 col-md-3 offset-md-9">
+            <div className="row fixed-bottom">
+                <div className="col-12 col-md-3 offset-md-6">                
+                    <Form.Control as="select" value={payment} onChange={changePayment}>
+                        <option>Efectivo</option>
+                        <option>Tarjeta</option>
+                    </Form.Control>
+                </div>
+                <div className="card col-12 col-md-3 ">
                     <ul className="list-group list-group-flush">                        
                         <li className="list-group-item d-flex justify-content-between">
                             <div>Subtotal: </div>
@@ -167,8 +220,9 @@ export default function EmisorTickets() {
                             <div>Total: </div>
                             <div>${total}</div>
                         </li>
+                        
                         <li className="list-group-item">
-                            <Button variant="success w-100">FINALIZAR VENTA</Button>
+                            <Button variant="success w-100" onClick={finSale}>FINALIZAR VENTA</Button>
                         </li>
                     </ul>
                 </div>

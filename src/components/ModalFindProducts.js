@@ -38,7 +38,7 @@ export default function ModalFindProducts({show, handleClose, handleShow, findPr
                             <tbody>
                             {
                                 findProducts.map(producto =>(
-                                    <tr>
+                                    <tr key={producto.id}>
                                     <td>{producto.id}</td>
                                     <td>{producto.nombre}</td>
                                     <td>{producto.stock}</td>

@@ -52,7 +52,7 @@ function App() {
             path="/emisionticket"
             exact
             component = { () => 
-              <EmisorTickets />
+              <EmisorTickets date={date}/>
             }
           />
 
